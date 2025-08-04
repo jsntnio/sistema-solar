@@ -222,3 +222,83 @@ document.getElementById("fecharModal").addEventListener("click", () =>
 {
  document.getElementById("modal").style.display = "none";
 });
+
+
+/* SIMULADOR */
+
+const planetas = [{ 
+    nome: "Mercúrio", 
+    distancia: 58 
+},
+{ 
+  nome: "Vênus", 
+  distancia: 108 
+},
+{ 
+  nome: "Terra", 
+  distancia: 150 
+},
+{ 
+  nome: "Marte", 
+  distancia: 228 
+},
+{ 
+  nome: "Júpiter", 
+  distancia: 778 
+},
+{ 
+  nome: "Saturno", 
+  distancia: 1427 
+},
+{ 
+  nome: "Urano", 
+  distancia: 2871 
+},
+{ 
+  nome: "Netuno", 
+  distancia: 4495 
+} 
+];
+
+function mostrarDistancias(planetaSelecionado) { 
+  const container = document.getElementById("graficoDistancia"); 
+  container.innerHTML = "";
+
+  const fator = 0.08;
+
+  planetas.forEach(planeta => {
+  const barraWrapper = document.createElement("div");
+  barraWrapper.className = "barra-wrapper";
+
+    
+  const label = document.createElement("span"); 
+  label.className = "label"; 
+  label.textContent = planeta.nome;
+
+  const barra = document.createElement("div"); 
+  barra.className = "barra"; 
+  barra.style.width = "0px";
+
+  const distancia = document.createElement("span"); 
+  distancia.className = "distancia"; 
+  distancia.textContent = planeta.distancia + " milhões km";
+
+  barraWrapper.appendChild(label); 
+  barraWrapper.appendChild(barra); 
+  barraWrapper.appendChild(distancia); 
+  container.appendChild(barraWrapper);
+
+  setTimeout(() => {
+     barra.style.width = (planeta.distancia * fator) + "px";
+     if (planeta.nome === planetaSelecionado) {
+       barra.classList.add("selecionado");
+     }
+  }, 150);
+});
+}
+
+mostrarDistancias("");
+
+document.getElementById("planetaSelect").addEventListener("change", (e) => {
+  mostrarDistancias(e.target.value);
+});
